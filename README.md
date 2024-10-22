@@ -1,9 +1,12 @@
 Training GPT2 Chinese from zero to hero
+==
 
 1.Description:
+---
 从头训练一个82M的中文GPT2模型，使用BERT的Tokenizer.中文语料采用斗破苍穹小说的部分章节，大小约16M。训练15个周期，batchsize=8。最终可以续写10句以上的斗破苍穹小说。
 
 2.Start:
+----
 (1)***environment***
 首先，我们下载依赖。
 pip install -r requirements.txt
@@ -70,6 +73,8 @@ number of parameters: 81894144
 现在，我们可以使用我们用目标语料训练生成的模型来进行文字生成，使用如下命令：
 python generate.py   --device 1   --length 1000   --tokenizer_path cache/vocab_small.txt   --model_path model/final_model   --prefix "[CLS]萧炎大喝一声"   --topp 1   --temperature 1.0 --save_samples --save_samples_path ./mnt/
 
+3.Result
+--
 最终会生成10个文字样本，存储在./mnt/目录下，其中之一如下：
 
 ======================================== SAMPLE 1 ========================================
