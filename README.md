@@ -8,17 +8,24 @@ Training GPT2 Chinese from zero to hero
 2.Start:
 ----
 (1)***environment***
+
 首先，我们下载依赖。
+```bash
 pip install -r requirements.txt
+```
 
 (2)***dataset***
+
 准备中文语料，放置在./data/文件夹下，将语料由.txt文件更改为input.json文件
 斗破苍穹小说语料来源于https://github.com/GaoPeng97/transformer-xl-chinese/tree/master/data/doupo
 
 按照参考样例./train.json更改input.json文件格式,由于数据集内容为原始的小说内容，包含着大量的非法字符和json读取不支持的控制字符，因此我们对原始数据集文件进行处理，去除其中非法字符，生成预处理好的数据集文件train.json。
+```bash
 python clr_ctrl.py
+```
 
 (3)***Model***
+
 在model_config 定义初始GPT-2模型的超参数配置，
 - "initializer_range": 0.02 ： 定义了模型参数（如权重矩阵）在初始化时的标准差，权重会在均值为0，标准差为0.02的正态分布中进行随机初始化。
 - "layer_norm_epsilon": 1e-05 ： 用于层归一化的常数，用于避免在归一化过程中出现除以零的情况。设置值为1e-05，用于稳定训练。
@@ -31,10 +38,11 @@ python clr_ctrl.py
 
 
 (4)***Training***
+
 现在，我们可以使用我们处理好的数据集来训练我们的初始gpt2模型，使用如下命令：
-
+```bash
 python train.py   --model_config config/model_config_small.json   --tokenized_data_path data/tokenized/   --tokenizer_path cache/vocab_small.txt   --raw_data_path data/train.json   --epochs 15   --log_step 200   --stride 512   --output_dir model/   --device 0,1   --num_pieces 100   --raw
-
+```
 
 在这个过程中，我们可以看到命令窗口打印出模型的config文件，定义了模型的结构；同时也打印出了模型的参数量，为81894144，约82M
 Print Model config
@@ -70,8 +78,11 @@ number of parameters: 81894144
 训练过程中，每个epoch对应的模型都将存储在./model/目录下，最终训练好的模型将存储在./model/final_model/路径中。
 
 (5)***Generate***
+
 现在，我们可以使用我们用目标语料训练生成的模型来进行文字生成，使用如下命令：
+```bash
 python generate.py   --device 1   --length 1000   --tokenizer_path cache/vocab_small.txt   --model_path model/final_model   --prefix "[CLS]萧炎大喝一声"   --topp 1   --temperature 1.0 --save_samples --save_samples_path ./mnt/
+```
 
 3.Result
 --
