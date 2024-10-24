@@ -45,6 +45,7 @@ python train.py   --model_config config/model_config_small.json   --tokenized_da
 ```
 
 在这个过程中，我们可以看到命令窗口打印出模型的config文件，定义了模型的结构；同时也打印出了模型的参数量，为81894144，约82M
+
 Print Model config
 config:
 {
